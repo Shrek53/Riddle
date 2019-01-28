@@ -1,10 +1,11 @@
-# react-native-template-app
-This is a react-native template app with drawer and bottom tab navigation using react navigation and react-native-cli
+# RootApp
+This is a react-native template app with drawer and bottom tab navigation using react navigation and react-native-cli.
+Swiper, floating button, native base etc used in this App.
 
 ## How to run
 ```
-git clone https://github.com/Shrek53/react-native-template-app.git ReactNativeTemplateApp
-cd ReactNativeTemplateApp
+git clone https://github.com/Shrek53/RootApp.git
+cd RootApp
 npm install
 react-native run-android
 ```
