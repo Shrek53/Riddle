@@ -19,6 +19,7 @@ const SettingsStack = createStackNavigator({
     Settings: SettingsScreen,
   });
 
+
 // const MainBottomTab = createMaterialTopTabNavigator({
 //     Home : HomeStack,
 //     Settings: SettingsStack,
