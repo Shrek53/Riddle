@@ -10,7 +10,7 @@ export default class SettingsScreen extends React.Component {
   };
   signOut = async () => {
     await AsyncStorage.clear()
-    this.props.navigation.navigate("AuthLoading")
+    this.props.navigation.navigate("Loading")
   }
   render() {
     return(
