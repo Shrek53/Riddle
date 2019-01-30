@@ -77,7 +77,9 @@ export default class MainSwiper extends React.Component {
         >
           {items.map(item => (
             <View style={styles.slide_window} key={item.id}>
-              <Text style={styles.text}>{item.title} </Text>
+				<View style={styles.text_wrapper}>
+					<Text style={styles.text}>{item.title} </Text>
+				</View>
             </View>
           ))}
         </Swiper>
@@ -102,6 +104,9 @@ const styles = StyleSheet.create({
     color: "#000",
     fontSize: 30,
     fontWeight: "bold"
+  },
+  text_wrapper: {
+    padding: 20
   },
   paginationStyle: {
     position: 'absolute',
