@@ -58,7 +58,29 @@ export default class RiddleLevelListComponent extends React.Component {
   }
   
   level_btn_clicked = async ()=> {
-    this.props.navigation.navigate("RiddleDetailsStack")
+    this.props.navigation.navigate("RiddleDetailsStack",{
+    
+      riddle_group : [
+        {
+          question: "I can fly but I live under water.",
+          correct_answer: "Flying Fish",
+          options:["Dolphin","Flying Fish","Shark","Sting Ray"],
+          id:1
+        },
+        {
+          question: "I am a mammal but I live under water.",
+          correct_answer: "Dolphin",
+          options:["Flying Fish","Shark","Dolphin","Sting Ray"],
+          id:2
+        },
+        {
+          question: "I have wings but I can not fly",
+          correct_answer: "Sting Ray",
+          options:["Dolphin","Sting Ray","Flying Fish","Shark"],
+          id:3
+        }
+      ]
+    })
   }
   render() {
     const { error, isLoaded, items } = this.state;
