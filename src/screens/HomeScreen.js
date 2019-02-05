@@ -13,6 +13,8 @@ import CommonHeader from "./partial/CommonHeader";
 import MainSwiper from "../components/SwiperComponent";
 import FloatingButtonComponent from "../components/FloatingButtonComponent";
 import GlobalStyles from '../assets/styles/GlobalStyles';
+import RiddleNavigator from '../navigation/home/RiddleNavigator';
+
 
 export default class HomeScreen extends React.Component {
   constructor(props) {
@@ -26,9 +28,11 @@ export default class HomeScreen extends React.Component {
     return (
       <SafeAreaView style={GlobalStyles.droidSafeArea}>
       <View style={styles.container}>
-        <CommonHeader title="Home" />
-        <MainSwiper />
-        <FloatingButtonComponent/> 
+        <CommonHeader title="Riddle Levels" />
+        <RiddleNavigator />
+        
+        {/* <MainSwiper /> */}
+        {/* <FloatingButtonComponent/>  */}
       </View>
       </SafeAreaView>
     );
