@@ -28,7 +28,7 @@ export default class HomeScreen extends React.Component {
     return (
       <SafeAreaView style={GlobalStyles.droidSafeArea}>
       <View style={styles.container}>
-        <CommonHeader title="Riddle Levels" />
+        {/* <CommonHeader title="Riddle Levels" /> */}
         <RiddleNavigator />
         
         {/* <MainSwiper /> */}

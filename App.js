@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
-// import AppNavigator from './navigation/AppNavigator';
-import AppNavigator from './src/navigation/AppNavigator';
+// import AppNavigator from './src/navigation/AppNavigator';
+import RiddleNavigator from './src/navigation/home/RiddleNavigator';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -16,7 +16,8 @@ export default class App extends Component<Props> {
     return (
           <View style={styles.container}>
             {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-            <AppNavigator />
+            {/* <AppNavigator /> */}
+            <RiddleNavigator />
           </View>
     );
   }

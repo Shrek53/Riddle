@@ -7,7 +7,8 @@ import {
   Text,
   View,
   Dimensions,
-  Button
+  Button,
+  TouchableOpacity
 } from "react-native";
 import Swiper from "react-native-swiper";
 import Theme from '../constants/Theme';
@@ -98,16 +99,23 @@ export default class RiddleLevelListComponent extends React.Component {
       );
     } else {
       return (
-        <ScrollView>            
+        <ScrollView style={styles.container}>            
+        <View style={styles.tagline_wrapper}>
+          <Text style={styles.tagline_text}>Play to unlock more</Text>
+        </View>
         {
          this.state.arr.map( item => 
               <View style={styles.level_button_wrapper} key={item}>
-                <Button title={`LEVEL ${item}`} style={styles.level_button} onPress={this.level_btn_clicked}/>
+                {/* <Button title={`LEVEL ${item}`} style={styles.level_button} onPress={this.level_btn_clicked}/> */}
+                <TouchableOpacity 
+                  onPress={this.level_btn_clicked}
+                  style={styles.level_button}
+                  >
+                  <Text style={styles.level_button_text}>{`LEVEL ${item}`}</Text>
+                </TouchableOpacity>
               </View>
          )
-         }
-      
-                                         
+         }                                        
         </ScrollView>
       );
     }
@@ -120,38 +128,31 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center"
   },
+  container:{
+    flex:1,
+    backgroundColor:'#303030'
+  },
+  tagline_wrapper:{
+    alignItems:'center',
+    padding:10,
+    margin:10
+  },
+  tagline_text:{
+    color:'white',
+    fontSize:24
+  },
   level_button:{
-    // paddingTop:20,
-    // marginTop:20
+    backgroundColor:'#F86903',
+    padding:10,
+    margin:5
+  },
+  level_button_text:{
+    color:'white',
+    textAlign:'center',
+    fontSize:36,
+    fontWeight:'bold'
   },
   level_button_wrapper:{
     padding:10
-  },
-  slide_window: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#fff"
-  },
-  text: {
-    color: "#000",
-    fontSize: 30,
-    fontWeight: "bold"
-  },
-  text_wrapper: {
-    padding: 20
-  },
-  paginationStyle: {
-    position: 'absolute',
-    bottom: 30,
-    left: 10,
-    padding:10,
-    borderRadius:30,
-    backgroundColor:Theme.Global.Blue,
-
-  },
-  paginationText: {
-    color: '#fff',
-    fontSize: 20
-  },
+  }
 });

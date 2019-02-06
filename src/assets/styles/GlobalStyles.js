@@ -4,7 +4,7 @@ import Theme from '../../constants/Theme';
 export default StyleSheet.create({
     droidSafeArea: {
         flex: 1,
-        backgroundColor: Theme.Global.Blue,
-        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+        // backgroundColor: Theme.Global.Blue,
+        // paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
     },
 });
