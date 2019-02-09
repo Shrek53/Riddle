@@ -10,24 +10,11 @@ import {
   Button,
   TouchableOpacity,
   TouchableHighlight,
-  Alert,
-  Modal
+  Alert
 } from "react-native";
-// import Overlay from 'react-native-modal-overlay';
+import {Icon} from 'native-base';
+import Modal from "react-native-modal";
 import AppContext from '../../AppContext';
-
-
-const renderPagination = (index=0, total, context) => {
-  return (
-    <View style={styles.paginationStyle}>
-      <Text style={{ color: "grey" }}>
-        <Text style={styles.paginationText}>{index + 1} of {total}</Text>
-      </Text>
-    </View>
-  );
-};
-
-
 
 export default class RiddleLevelListComponent extends React.Component {
   constructor(props) {
@@ -37,11 +24,12 @@ export default class RiddleLevelListComponent extends React.Component {
       isLoaded: false,
       items: [],
       arr:[0,1,2,3,4],
-      modalVisible: false
+      points_needed:0,
+      isModalVisible: false
     };
   }
-  setModalVisible(modal_visibility) {
-    this.setState({modalVisible: modal_visibility});
+  toggleModal(modal_visibility) {
+    this.setState({isModalVisible: modal_visibility});
   }
 
   static navigationOptions = {
@@ -96,7 +84,8 @@ export default class RiddleLevelListComponent extends React.Component {
       })
     }
     else{
-      this.setModalVisible(true);
+      this.toggleModal(true);
+      this.setState({points_needed:level_number*20-points})
     }
   }
   render() {
@@ -118,6 +107,31 @@ export default class RiddleLevelListComponent extends React.Component {
         <AppContext.Consumer>
           {(context_data)=>(
             <ScrollView style={styles.container}>
+              
+              <Modal 
+              isVisible={this.state.isModalVisible} 
+              onBackButtonPress={()=>this.toggleModal(false)}
+			  backdropOpacity={0.9}
+			  hideModalContentWhileAnimating={true}
+              style={styles.modal_wrapper}>
+                <View style={styles.modal_main_view}>
+					<View style={styles.close_btn_wrapper}>
+						<TouchableOpacity onPress={()=>this.toggleModal(false)}>
+						<Text style={styles.modal_close_button}>X</Text>
+						</TouchableOpacity>
+					</View>
+					<View style={styles.modal_message_wrapper}>
+						<Text style={styles.modal_text}>{this.state.points_needed} more points needed to unlock this level. To earn more points</Text>
+					</View>
+					<View style={styles.advertize_btn_wrapper}>
+						<TouchableOpacity onPress={()=>this.toggleModal(false)}>
+						<Text style={styles.modal_watch_ad_button}> Watch advertize</Text>
+						</TouchableOpacity>
+					</View>
+                </View>
+              </Modal>
+              
+              
               <View style={styles.tagline_wrapper}>
                 <Text style={styles.tagline_text}>Play to unlock more</Text>
               </View>
@@ -175,17 +189,57 @@ const styles = StyleSheet.create({
     padding:10
   },
   modal_wrapper:{
-    flex:1,
-    alignItems:'center',
-    justifyContent:'center',
-    backgroundColor:'#303030'
+    // flex:1,
+    // alignItems:'center',
+    // justifyContent:'center',
+    // backgroundColor:'#303030'
   },
   modal_text:{
     color: 'white',
-    fontSize:18
+    fontSize:24,
+    fontWeight:'bold',
+    paddingBottom:20
   },
-  Modal_close_button:{
+  modal_main_view:{
+	flex:1,
+	
+  },
+  close_btn_wrapper:{
+	//   flexDirection:'row-reverse',
+	// justifyContent:'flex-end',
+	// alignItems:'flex-end',
+	flex:1,
+	width:55,
+    padding:5
+  },
+  modal_message_wrapper:{
+	flex:1,
+	alignItems:'center'
+  },
+  advertize_btn_wrapper:{
+	flex:1,
+	alignItems:'center'
+  },
+  
+  modal_close_button:{
+    borderRadius:10,
     backgroundColor:'red',
-    color:'white'
+    textAlign:'center',
+    fontSize:18,
+    fontWeight:'bold',
+    color:'white',
+    padding:10,
+    // width:90
+  },
+  modal_watch_ad_button:{
+    borderRadius:10,
+    backgroundColor:'red',
+    textAlign:'center',
+    fontSize:18,
+    fontWeight:'bold',
+    color:'white',
+    padding:10,
+    // width:90
   }
+
 });
