@@ -8,10 +8,14 @@ import {
   View,
   Dimensions,
   Button,
-  TouchableOpacity
+  TouchableOpacity,
+  TouchableHighlight,
+  Alert,
+  Modal
 } from "react-native";
-import Swiper from "react-native-swiper";
-import Theme from '../constants/Theme';
+// import Overlay from 'react-native-modal-overlay';
+import AppContext from '../../AppContext';
+
 
 const renderPagination = (index=0, total, context) => {
   return (
@@ -23,6 +27,8 @@ const renderPagination = (index=0, total, context) => {
   );
 };
 
+
+
 export default class RiddleLevelListComponent extends React.Component {
   constructor(props) {
     super(props);
@@ -30,9 +36,14 @@ export default class RiddleLevelListComponent extends React.Component {
       error: null,
       isLoaded: false,
       items: [],
-      arr:[1,2,3,4,5]
+      arr:[0,1,2,3,4],
+      modalVisible: false
     };
   }
+  setModalVisible(modal_visibility) {
+    this.setState({modalVisible: modal_visibility});
+  }
+
   static navigationOptions = {
     header: null,
   };
@@ -58,30 +69,35 @@ export default class RiddleLevelListComponent extends React.Component {
       );
   }
   
-  level_btn_clicked = async ()=> {
-    this.props.navigation.navigate("RiddleDetailsStack",{
+  async level_btn_clicked(points,level_number) {
+    if(points >= level_number*20){
+      this.props.navigation.navigate("RiddleDetailsStack",{
     
-      riddle_group : [
-        {
-          question: "I can fly but I live under water.",
-          correct_answer: "Flying Fish",
-          options:["Dolphin","Flying Fish","Shark","Sting Ray"],
-          id:1
-        },
-        {
-          question: "I am a mammal but I live under water.",
-          correct_answer: "Dolphin",
-          options:["Flying Fish","Shark","Dolphin","Sting Ray"],
-          id:2
-        },
-        {
-          question: "I have wings but I can not fly",
-          correct_answer: "Sting Ray",
-          options:["Dolphin","Sting Ray","Flying Fish","Shark"],
-          id:3
-        }
-      ]
-    })
+        riddle_group : [
+          {
+            question: "I can fly but I live under water.",
+            correct_answer: "Flying Fish",
+            options:["Dolphin","Flying Fish","Shark","Sting Ray"],
+            id:1
+          },
+          {
+            question: "I am a mammal but I live under water.",
+            correct_answer: "Dolphin",
+            options:["Flying Fish","Shark","Dolphin","Sting Ray"],
+            id:2
+          },
+          {
+            question: "I have wings but I can not fly",
+            correct_answer: "Sting Ray",
+            options:["Dolphin","Sting Ray","Flying Fish","Shark"],
+            id:3
+          }
+        ]
+      })
+    }
+    else{
+      this.setModalVisible(true);
+    }
   }
   render() {
     const { error, isLoaded, items } = this.state;
@@ -99,24 +115,27 @@ export default class RiddleLevelListComponent extends React.Component {
       );
     } else {
       return (
-        <ScrollView style={styles.container}>            
-        <View style={styles.tagline_wrapper}>
-          <Text style={styles.tagline_text}>Play to unlock more</Text>
-        </View>
-        {
-         this.state.arr.map( item => 
+        <AppContext.Consumer>
+          {(context_data)=>(
+            <ScrollView style={styles.container}>
+              <View style={styles.tagline_wrapper}>
+                <Text style={styles.tagline_text}>Play to unlock more</Text>
+              </View>
+              {
+              this.state.arr.map( (item) => 
               <View style={styles.level_button_wrapper} key={item}>
-                {/* <Button title={`LEVEL ${item}`} style={styles.level_button} onPress={this.level_btn_clicked}/> */}
                 <TouchableOpacity 
-                  onPress={this.level_btn_clicked}
+                  onPress={()=>this.level_btn_clicked(context_data.state.points, item)}
                   style={styles.level_button}
                   >
                   <Text style={styles.level_button_text}>{`LEVEL ${item}`}</Text>
                 </TouchableOpacity>
               </View>
-         )
-         }                                        
-        </ScrollView>
+                )
+              }                                        
+            </ScrollView>
+          )}          
+        </AppContext.Consumer>
       );
     }
   }
@@ -154,5 +173,19 @@ const styles = StyleSheet.create({
   },
   level_button_wrapper:{
     padding:10
+  },
+  modal_wrapper:{
+    flex:1,
+    alignItems:'center',
+    justifyContent:'center',
+    backgroundColor:'#303030'
+  },
+  modal_text:{
+    color: 'white',
+    fontSize:18
+  },
+  Modal_close_button:{
+    backgroundColor:'red',
+    color:'white'
   }
 });

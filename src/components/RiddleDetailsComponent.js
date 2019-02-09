@@ -12,6 +12,8 @@ import {
 } from "react-native";
 import Theme from "../constants/Theme";
 
+import AppContext from '../../AppContext';
+
 const renderPagination = (index = 0, total, context) => {
   return (
     <View style={styles.paginationStyle}>
@@ -36,11 +38,19 @@ export default class RiddleDetailsComponent extends React.Component {
       riddle_group_length:riddle_group_length
     };
   }
+
+  // static contextType = PointsContext;
+
   static navigationOptions = {
     header: null,
   };
 
-  level_btn_clicked = ()=>{
+  riddle_answer_submit(change_points_by,pnt){
+    change_points_by(pnt)
+    this.change_riddles()
+  }
+
+  change_riddles = ()=>{
     if (this.state.riddle_group_pos < this.state.riddle_group_length-1) {
     this.setState({
       riddle: this.state.riddle_group[this.state.riddle_group_pos + 1],
@@ -59,9 +69,16 @@ export default class RiddleDetailsComponent extends React.Component {
   render() {
     console.log(this.state);
     return (
+      <AppContext.Consumer>
+        {(data) => (
       <View style={styles.container}>
         <View style={styles.stat_bar}>
-          <Text style={styles.stat_bar_text}>{this.state.riddle_group_pos+1}/{this.state.riddle_group_length}</Text>
+        <View style={styles.stat_bar_points_wrapper}>
+          <Text style={styles.stat_bar_points_text}>Pts: {data.state.points}</Text>
+        </View>
+        <View style={styles.stat_bar_pagination_wrapper}>
+          <Text style={styles.stat_bar_pagination_text}>{this.state.riddle_group_pos+1}/{this.state.riddle_group_length}</Text>
+        </View>
         </View>
         <View style={styles.question_block}>
           <Text style={styles.question_text}>{this.state.riddle.question}</Text>
@@ -71,7 +88,7 @@ export default class RiddleDetailsComponent extends React.Component {
             <View style={{...styles.answer_button_wrapper, backgroundColor: this.get_btm_bg_color(index)}} key={item}>
               <TouchableOpacity
                 style={styles.answer_button}
-                onPress={this.level_btn_clicked}
+                onPress={ ()=>{this.riddle_answer_submit(data.change_points_by, this.state.riddle.correct_answer==item?10:-2) }}
               >
               <Text style={styles.btn_text} >{item}</Text>
               </TouchableOpacity>
@@ -79,6 +96,8 @@ export default class RiddleDetailsComponent extends React.Component {
           ))}
         </View>
       </View>
+        )}
+      </AppContext.Consumer>
     );
   }
 }
@@ -90,12 +109,28 @@ const styles = StyleSheet.create({
   },
   stat_bar:{
     flex:1,
-    justifyContent:'flex-start'
+    flexDirection:'row',
+    justifyContent: 'space-around',
+    alignItems:'center',
+    // paddingLeft:10,
   },
-  stat_bar_text:{
+  stat_bar_points_wrapper:{
+    // flex:1,
+    // alignItems:'center',
+    // justifyContent: 'space-around',
+  },
+  stat_bar_points_text:{
     color:'white',
     fontSize:18,
-    textAlign:'center'
+  },
+  stat_bar_pagination_wrapper:{
+    // flex:2,
+    // justifyContent: 'center',
+    // alignItems:'center'
+  },
+  stat_bar_pagination_text:{
+    color:'white',
+    fontSize:18,
   },
   question_block: {
     flex: 3,
