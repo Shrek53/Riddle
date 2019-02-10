@@ -7,6 +7,15 @@ Swiper, floating button, native base etc used in this App.
 git clone https://github.com/Shrek53/RootApp.git
 cd RootApp
 npm install
+```
+After that inside node-module/react-native-admob/android/build.gradle file
+change the line 
+compile 'com.google.android.gms:play-services-ads:+'
+with the following line
+compile 'com.google.android.gms:play-services-ads:16.0.0'
+
+Then run the following commnd 
+```
 react-native run-android
 ```
 

@@ -10,21 +10,13 @@ import {
   Dimensions,
   Button
 } from "react-native";
-import Theme from "../constants/Theme";
+
+import {
+  AdMobBanner,
+} from 'react-native-admob'
 
 import AppContext from '../../AppContext';
 
-const renderPagination = (index = 0, total, context) => {
-  return (
-    <View style={styles.paginationStyle}>
-      <Text style={{ color: "grey" }}>
-        <Text style={styles.paginationText}>
-          {index + 1} of {total}
-        </Text>
-      </Text>
-    </View>
-  );
-};
 
 export default class RiddleDetailsComponent extends React.Component {
   constructor(props) {
@@ -94,6 +86,14 @@ export default class RiddleDetailsComponent extends React.Component {
               </TouchableOpacity>
             </View>
           ))}
+        </View>
+        <View>
+        <AdMobBanner
+          adSize="smartBanner"
+          adUnitID="ca-app-pub-3940256099942544/6300978111"
+          // testDevices={[EMULATOR]}
+          onAdFailedToLoad={error => console.error(error)}
+        />
         </View>
       </View>
         )}

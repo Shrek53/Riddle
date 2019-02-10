@@ -56,31 +56,37 @@ export default class RiddleLevelListComponent extends React.Component {
         }
       );
   }
-  
+  riddle_list= [
+    {
+      question: "I can fly but I live under water.",
+      correct_answer: "Flying Fish",
+      options:["Dolphin","Flying Fish","Shark","Sting Ray"],
+      id:1
+    },
+    {
+      question: "I am a mammal but I live under water.",
+      correct_answer: "Dolphin",
+      options:["Flying Fish","Shark","Dolphin","Sting Ray"],
+      id:2
+    },
+    {
+      question: "I have wings but I can not fly",
+      correct_answer: "Sting Ray",
+      options:["Dolphin","Sting Ray","Flying Fish","Shark"],
+      id:3
+    }
+  ];
   async level_btn_clicked(points,level_number) {
-    if(points >= level_number*20){
+    if(level_number==0){
       this.props.navigation.navigate("RiddleDetailsStack",{
     
-        riddle_group : [
-          {
-            question: "I can fly but I live under water.",
-            correct_answer: "Flying Fish",
-            options:["Dolphin","Flying Fish","Shark","Sting Ray"],
-            id:1
-          },
-          {
-            question: "I am a mammal but I live under water.",
-            correct_answer: "Dolphin",
-            options:["Flying Fish","Shark","Dolphin","Sting Ray"],
-            id:2
-          },
-          {
-            question: "I have wings but I can not fly",
-            correct_answer: "Sting Ray",
-            options:["Dolphin","Sting Ray","Flying Fish","Shark"],
-            id:3
-          }
-        ]
+        riddle_group : this.riddle_list
+      })
+    }
+    else if(points >= level_number*20){
+      this.props.navigation.navigate("RiddleDetailsStack",{
+    
+        riddle_group : this.riddle_list
       })
     }
     else{
@@ -109,25 +115,25 @@ export default class RiddleLevelListComponent extends React.Component {
             <ScrollView style={styles.container}>
               
               <Modal 
-              isVisible={this.state.isModalVisible} 
-              onBackButtonPress={()=>this.toggleModal(false)}
-			  backdropOpacity={0.9}
-			  hideModalContentWhileAnimating={true}
-              style={styles.modal_wrapper}>
+                isVisible={this.state.isModalVisible} 
+                onBackButtonPress={()=>this.toggleModal(false)}
+			          backdropOpacity={0.9}
+			          hideModalContentWhileAnimating={true}
+                style={styles.modal_wrapper}>
                 <View style={styles.modal_main_view}>
-					<View style={styles.close_btn_wrapper}>
-						<TouchableOpacity onPress={()=>this.toggleModal(false)}>
-						<Text style={styles.modal_close_button}>X</Text>
-						</TouchableOpacity>
-					</View>
-					<View style={styles.modal_message_wrapper}>
-						<Text style={styles.modal_text}>{this.state.points_needed} more points needed to unlock this level. To earn more points</Text>
-					</View>
-					<View style={styles.advertize_btn_wrapper}>
-						<TouchableOpacity onPress={()=>this.toggleModal(false)}>
-						<Text style={styles.modal_watch_ad_button}> Watch advertize</Text>
-						</TouchableOpacity>
-					</View>
+                  <View style={styles.close_btn_wrapper}>
+                    <TouchableOpacity onPress={()=>this.toggleModal(false)}>
+                    <Text style={styles.modal_close_button}>X</Text>
+                    </TouchableOpacity>
+                  </View>
+                  <View style={styles.modal_message_wrapper}>
+                    <Text style={styles.modal_text}>{this.state.points_needed} more points needed to unlock this level. To earn more points</Text>
+                  </View>
+                  <View style={styles.advertize_btn_wrapper}>
+                    <TouchableOpacity onPress={()=>this.toggleModal(false)}>
+                    <Text style={styles.modal_watch_ad_button}> Watch advertize</Text>
+                    </TouchableOpacity>
+                  </View>
                 </View>
               </Modal>
               
