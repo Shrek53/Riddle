@@ -31,7 +31,6 @@ export default class RiddleDetailsComponent extends React.Component {
     };
   }
 
-  // static contextType = PointsContext;
 
   static navigationOptions = {
     header: null,
@@ -57,6 +56,8 @@ export default class RiddleDetailsComponent extends React.Component {
     colors=['#B92625','#29BA5D','#A02CB5','#3382BC'];
     return colors[index];
   }
+
+
 
   render() {
     console.log(this.state);
@@ -90,7 +91,8 @@ export default class RiddleDetailsComponent extends React.Component {
         <View>
         <AdMobBanner
           adSize="smartBanner"
-          adUnitID="ca-app-pub-3940256099942544/6300978111"
+          adUnitID="ca-app-pub-3266208902155663/2483160559"
+          // adUnitID="ca-app-pub-3940256099942544/6300978111"
           // testDevices={[EMULATOR]}
           onAdFailedToLoad={error => console.error(error)}
         />

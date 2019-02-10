@@ -15,6 +15,8 @@ import {
 import {Icon} from 'native-base';
 import Modal from "react-native-modal";
 import AppContext from '../../AppContext';
+import {AdMobRewarded } from 'react-native-admob'
+
 
 export default class RiddleLevelListComponent extends React.Component {
   constructor(props) {
@@ -25,9 +27,12 @@ export default class RiddleLevelListComponent extends React.Component {
       items: [],
       arr:[0,1,2,3,4],
       points_needed:0,
-      isModalVisible: false
+      isModalVisible: false,
+      isAdLoaded:false
     };
   }
+
+
   toggleModal(modal_visibility) {
     this.setState({isModalVisible: modal_visibility});
   }
@@ -35,6 +40,61 @@ export default class RiddleLevelListComponent extends React.Component {
   static navigationOptions = {
     header: null,
   };
+
+  componentDidMount(){
+    AdMobRewarded.setTestDevices([AdMobRewarded.simulatorId]);
+    AdMobRewarded.setAdUnitID('ca-app-pub-3266208902155663/3661221297');
+
+    AdMobRewarded.addEventListener('rewarded',
+      (reward) => {
+        console.log('AdMobRewarded => rewarded', reward)
+        this.change_points_by_ref(reward.amount)
+      }
+    );
+    AdMobRewarded.addEventListener('adLoaded',
+      () => {
+        console.log('AdMobRewarded => adLoaded')
+        this.setState({isAdLoaded:true})
+      }
+        );
+    AdMobRewarded.addEventListener('adFailedToLoad',
+      (error) => console.warn(error)
+    );
+    AdMobRewarded.addEventListener('adOpened',
+      () => console.log('AdMobRewarded => adOpened')
+    );
+    AdMobRewarded.addEventListener('videoStarted',
+      () => console.log('AdMobRewarded => videoStarted')
+    );
+    AdMobRewarded.addEventListener('adClosed',
+      () => {
+        console.log('AdMobRewarded => adClosed');
+        AdMobRewarded.requestAd().catch(error => console.warn(error));
+      }
+    );
+    AdMobRewarded.addEventListener('adLeftApplication',
+      () => console.log('AdMobRewarded => adLeftApplication')
+    );
+    if(!this.state.isAdLoaded){ //this condition should be checked in future
+        AdMobRewarded.requestAd().catch(error => console.warn(error)); 
+    }
+    
+  }
+
+  componentWillUnmount() {
+    AdMobRewarded.removeAllListeners();
+  }
+  change_points_by_ref=()=>{};
+  watchRewardAdBtnPressed(change_points_by){
+    this.change_points_by_ref=change_points_by
+    this.showRewarded()
+  }
+
+
+  showRewarded() {
+    AdMobRewarded.showAd().catch(error => console.warn(error));
+  }
+
   componentWillMount() {
     fetch("https://jsonplaceholder.typicode.com/todos")
       .then(res => res.json())
@@ -76,16 +136,16 @@ export default class RiddleLevelListComponent extends React.Component {
       id:3
     }
   ];
+
+
   async level_btn_clicked(points,level_number) {
     if(level_number==0){
       this.props.navigation.navigate("RiddleDetailsStack",{
-    
         riddle_group : this.riddle_list
       })
     }
     else if(points >= level_number*20){
       this.props.navigation.navigate("RiddleDetailsStack",{
-    
         riddle_group : this.riddle_list
       })
     }
@@ -94,6 +154,8 @@ export default class RiddleLevelListComponent extends React.Component {
       this.setState({points_needed:level_number*20-points})
     }
   }
+
+
   render() {
     const { error, isLoaded, items } = this.state;
     if (error) {
@@ -130,7 +192,7 @@ export default class RiddleLevelListComponent extends React.Component {
                     <Text style={styles.modal_text}>{this.state.points_needed} more points needed to unlock this level. To earn more points</Text>
                   </View>
                   <View style={styles.advertize_btn_wrapper}>
-                    <TouchableOpacity onPress={()=>this.toggleModal(false)}>
+                    <TouchableOpacity onPress={()=>this.watchRewardAdBtnPressed(context_data.change_points_by) }>
                     <Text style={styles.modal_watch_ad_button}> Watch advertize</Text>
                     </TouchableOpacity>
                   </View>
@@ -152,7 +214,7 @@ export default class RiddleLevelListComponent extends React.Component {
                 </TouchableOpacity>
               </View>
                 )
-              }                                        
+              }
             </ScrollView>
           )}          
         </AppContext.Consumer>
