@@ -91,8 +91,8 @@ export default class RiddleDetailsComponent extends React.Component {
         <View>
         <AdMobBanner
           adSize="smartBanner"
-          adUnitID="ca-app-pub-3266208902155663/2483160559"
-          // adUnitID="ca-app-pub-3940256099942544/6300978111"
+          // adUnitID="ca-app-pub-3266208902155663/2483160559"
+          adUnitID="ca-app-pub-3940256099942544/6300978111"
           // testDevices={[EMULATOR]}
           onAdFailedToLoad={error => console.error(error)}
         />

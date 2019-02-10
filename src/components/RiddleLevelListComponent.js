@@ -43,7 +43,8 @@ export default class RiddleLevelListComponent extends React.Component {
 
   componentDidMount(){
     AdMobRewarded.setTestDevices([AdMobRewarded.simulatorId]);
-    AdMobRewarded.setAdUnitID('ca-app-pub-3266208902155663/3661221297');
+    // AdMobRewarded.setAdUnitID('ca-app-pub-3266208902155663/3661221297');
+    AdMobRewarded.setAdUnitID('ca-app-pub-3940256099942544/5224354917');
 
     AdMobRewarded.addEventListener('rewarded',
       (reward) => {
