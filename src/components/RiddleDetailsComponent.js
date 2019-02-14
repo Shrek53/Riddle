@@ -1,22 +1,7 @@
 import React from "react";
-import {
-  Image,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Dimensions,
-  Button
-} from "react-native";
-
-import {
-  AdMobBanner,
-} from 'react-native-admob'
-
+import { StyleSheet, Text, View, TouchableOpacity,} from "react-native";
+import { AdMobBanner } from 'react-native-admob'
 import AppContext from '../../AppContext';
-
 
 export default class RiddleDetailsComponent extends React.Component {
   constructor(props) {
@@ -57,8 +42,6 @@ export default class RiddleDetailsComponent extends React.Component {
     return colors[index];
   }
 
-
-
   render() {
     console.log(this.state);
     return (
@@ -93,7 +76,6 @@ export default class RiddleDetailsComponent extends React.Component {
           adSize="smartBanner"
           // adUnitID="ca-app-pub-3266208902155663/2483160559"
           adUnitID="ca-app-pub-3940256099942544/6300978111"
-          // testDevices={[EMULATOR]}
           onAdFailedToLoad={error => console.error(error)}
         />
         </View>
