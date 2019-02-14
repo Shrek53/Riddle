@@ -1,22 +1,8 @@
 import React from "react";
-import {
-  Image,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-  Dimensions,
-  Button,
-  TouchableOpacity,
-  TouchableHighlight,
-  Alert
-} from "react-native";
-import {Icon} from 'native-base';
+import { ScrollView, StyleSheet, Text, View, TouchableOpacity,} from "react-native";
 import Modal from "react-native-modal";
 import AppContext from '../../AppContext';
-import {AdMobRewarded } from 'react-native-admob'
-
+import { AdMobRewarded } from 'react-native-admob'
 
 export default class RiddleLevelListComponent extends React.Component {
   constructor(props) {
