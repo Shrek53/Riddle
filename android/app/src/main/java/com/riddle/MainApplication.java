@@ -1,4 +1,4 @@
-package com.reactnativetemplateapp;
+package com.riddle;
 
 import android.app.Application;
 
