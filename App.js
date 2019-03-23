@@ -4,10 +4,24 @@ import RiddleNavigator from './src/navigation/home/RiddleNavigator';
 import AppContext from './AppContext';
 
 export default class App extends Component{
+  
+  // getRiddlesFromApiAsync = () => {
+  //   return fetch('https://facebook.github.io/react-native/movies.json')
+  //     .then((response) => response.json())
+  //     .then((responseJson) => {
+  //       return responseJson.movies;
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  // }
+
   constructor(){
     super()
+    //let riddles = this.getRiddlesFromApiAsync()
     this.state = {
-      points:0
+      points:0,
+     // riddles: riddles
     }
   }
 
