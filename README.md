@@ -21,7 +21,16 @@ react-native run-android
 ## How to build APK for android
 Firstly Build a keystore and then configure "android/gradle.properties" file accordingly.
 
-Secondly in  
+Secondly,
+Place the my-release-key.keystore file under the android/app directory in your project folder.
+
+Edit the file ~/.gradle/gradle.properties or android/gradle.properties, and add the following (replace ***** with the correct keystore password, alias and key password),  
+MYAPP_RELEASE_STORE_FILE=my-release-key.keystore  
+MYAPP_RELEASE_KEY_ALIAS=my-key-alias  
+MYAPP_RELEASE_STORE_PASSWORD=*****  
+MYAPP_RELEASE_KEY_PASSWORD=*****
+
+Thirdly in  
 "node-module/react-native-admob/android/build.gradle"  
 file change the compileSdkVersion and buildToolsVersion to following values  
 compileSdkVersion 27  
