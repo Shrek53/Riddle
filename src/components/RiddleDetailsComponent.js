@@ -4,16 +4,52 @@ import { AdMobBanner } from 'react-native-admob'
 import AppContext from '../../AppContext';
 
 export default class RiddleDetailsComponent extends React.Component {
+  riddle_api = 'http://api.luviatech.com/bangla-riddle/riddles/?page=';
+  riddle_group = []
   constructor(props) {
     super(props);
-    let riddle_group=this.props.navigation.getParam("riddle_group");
-    let riddle_group_length=riddle_group.length;
+    var level_number = this.props.navigation.getParam("level_number");
+    this.riddle_api=this.riddle_api+level_number
+    console.log(level_number);
+
+    this.fetch_riddle();
+
     this.state = {
-      riddle_group: riddle_group,
+      items: [],
+      level_number: level_number,
+      riddle_group: [],
       riddle_group_pos: 0,
-      riddle: riddle_group[0],
-      riddle_group_length:riddle_group_length
+      riddle: {
+            question: "I can fly but I live under water.",
+            correct_answer: "Flying Fish",
+            options:["Dolphin","Flying Fish","Shark","Sting Ray"],
+            id:1
+            },
+      riddle_group_length:10
     };
+  }
+
+  fetch_riddle = ()=>{
+    fetch(this.riddle_api)
+    .then(res => res.json())
+    .then(
+      result => {
+        this.riddle_group=result.results;
+        this.setState({
+          isLoaded: true,
+          items: result.results,
+          riddle_group: result.results,
+          riddle: result.results[0],
+          riddle_group_length: this.riddle_group.length
+        });
+      },
+      error => {
+        this.setState({
+          isLoaded: true,
+          error
+        });
+      }
+    );
   }
 
 
@@ -43,7 +79,7 @@ export default class RiddleDetailsComponent extends React.Component {
   }
 
   render() {
-    console.log(this.state);
+    // console.log(this.state);
     return (
       <AppContext.Consumer>
         {(data) => (

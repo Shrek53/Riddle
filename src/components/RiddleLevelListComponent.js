@@ -9,9 +9,9 @@ export default class RiddleLevelListComponent extends React.Component {
     super(props);
     this.state = {
       error: null,
-      isLoaded: false,
+      isLoaded: true,
       items: [],
-      arr:[0,1,2,3,4],
+      arr:[0,1,2],
       points_needed:0,
       isModalVisible: false,
       isAdLoaded:false
@@ -82,57 +82,16 @@ export default class RiddleLevelListComponent extends React.Component {
     AdMobRewarded.showAd().catch(error => console.warn(error));
   }
 
-  componentWillMount() {
-    fetch("http://api.luviatech.com/bangla-riddle/riddles/")
-      .then(res => res.json())
-      .then(
-        result => {
-          this.setState({
-            isLoaded: true,
-            items: result.results,
-          });
-        },
-        error => {
-          this.setState({
-            isLoaded: true,
-            error
-          });
-        }
-      );
-  }
-
-  // riddle_list= [
-  //   {
-  //     question: "I can fly but I live under water.",
-  //     correct_answer: "Flying Fish",
-  //     options:["Dolphin","Flying Fish","Shark","Sting Ray"],
-  //     id:1
-  //   },
-  //   {
-  //     question: "I am a mammal but I live under water.",
-  //     correct_answer: "Dolphin",
-  //     options:["Flying Fish","Shark","Dolphin","Sting Ray"],
-  //     id:2
-  //   },
-  //   {
-  //     question: "I have wings but I can not fly",
-  //     correct_answer: "Sting Ray",
-  //     options:["Dolphin","Sting Ray","Flying Fish","Shark"],
-  //     id:3
-  //   }
-  // ];
-
  
   async level_btn_clicked(points,level_number) {
     if(level_number==0){
       this.props.navigation.navigate("RiddleDetailsStack",{
-        riddle_group : this.state.items,
-        // rd: this.state.items
+        level_number: level_number+1,
       })
     }
     else if(points >= level_number*20){
       this.props.navigation.navigate("RiddleDetailsStack",{
-        riddle_group : this.state.items
+        level_number: level_number+1,
       })
     }
     else{
