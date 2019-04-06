@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, View} from 'react-native';
 import RiddleNavigator from './src/navigation/home/RiddleNavigator';
 import AppContext from './AppContext';
+var SQLite = require('react-native-sqlite-storage')
 
 export default class App extends Component{
 

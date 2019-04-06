@@ -3,6 +3,8 @@ import { ScrollView, StyleSheet, Text, View, TouchableOpacity,} from "react-nati
 import Modal from "react-native-modal";
 import AppContext from '../../AppContext';
 import { AdMobRewarded } from 'react-native-admob'
+var SQLite = require('react-native-sqlite-storage')
+var db = SQLite.openDatabase({name: 'riddle.db', createFromLocation: '~banglariddle.db'})
 
 export default class RiddleLevelListComponent extends React.Component {
   constructor(props) {
@@ -14,8 +16,20 @@ export default class RiddleLevelListComponent extends React.Component {
       arr:[0,1,2],
       points_needed:0,
       isModalVisible: false,
-      isAdLoaded:false
+      isAdLoaded:false,
+      gf: 'whatever',
     };
+
+    db.transaction((tx)=>{
+      query = 'SELECT * FROM gfs'
+      tx.executeSql(query, [], (tx, results)=>{
+        var len = results.rows.length;
+        if(len>0){
+          var row = results.rows.item(0)
+          this.setState({gf:row.name})
+        }
+      })
+    })
   }
 
 
@@ -160,6 +174,9 @@ export default class RiddleLevelListComponent extends React.Component {
               </View>
                 )
               }
+              <View>
+                <Text style={{color:'white'}}>GF:  {this.state.gf}</Text>
+              </View>
             </ScrollView>
           )}          
         </AppContext.Consumer>
