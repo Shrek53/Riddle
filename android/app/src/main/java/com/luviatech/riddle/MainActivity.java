@@ -1,4 +1,4 @@
-package com.riddle;
+package com.luviatech.riddle;
 
 import com.facebook.react.ReactActivity;
 
